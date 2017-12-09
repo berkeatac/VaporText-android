@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bgshape"
+    tools:context="berkea.vaportext.DisplayMessageActivity"
+    tools:layout_editor_absoluteY="81dp"
+    tools:layout_editor_absoluteX="0dp">
+
+    <TextView
+        android:id="@+id/textNo"
+        android:layout_width="327dp"
+        android:layout_height="169dp"
+        android:fontFamily="roboto"
+        android:gravity="center_vertical|center_horizontal"
+        android:maxLines="150"
+        android:scrollbars="vertical"
+        android:text="@string/app_name"
+        android:textAlignment="center"
+        android:textColor="@color/colorAccent"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:verticalScrollbarPosition="right"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.508"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.046"
+        />
+
+    <Button
+        android:id="@+id/copyButton"
+        android:layout_width="155dp"
+        android:layout_height="60dp"
+        android:background="@drawable/shape_empty"
+        android:text="@string/copyText"
+        android:textColor="@android:color/background_light"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/shareButton"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textNo"
+        app:layout_constraintVertical_bias="0.27"
+        android:layout_marginRight="0dp"
+        android:layout_marginLeft="0dp" />
+
+    <Button
+        android:id="@+id/backButton"
+        android:layout_width="155dp"
+        android:layout_height="60dp"
+        android:background="@drawable/shape_empty"
+        android:text="@string/backText"
+        android:textColor="@android:color/background_light"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textNo"
+        app:layout_constraintVertical_bias="0.789"
+        app:layout_constraintHorizontal_bias="0.502" />
+
+    <Button
+        android:id="@+id/shareButton"
+        android:layout_width="155dp"
+        android:layout_height="60dp"
+        android:background="@drawable/shape_empty"
+        android:text="@string/shareText"
+        android:textColor="@android:color/background_light"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textNo"
+        app:layout_constraintVertical_bias="0.27"
+        android:layout_marginLeft="0dp" />
+
+</android.support.constraint.ConstraintLayout>
