@@ -43,21 +43,19 @@
         app:layout_constraintVertical_bias="0.083"
         />
 
-    <com.google.android.gms.ads.AdView
-        xmlns:ads="http://schemas.android.com/apk/res-auto"
+    <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
         android:id="@+id/adView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
-        ads:adSize="LARGE_BANNER"
+        android:layout_centerHorizontal="true"
+        ads:adSize="MEDIUM_RECTANGLE"
         ads:adUnitId="ca-app-pub-7995520615225219/1832254449"
-        ads:layout_constraintRight_toRightOf="parent"
-        ads:layout_constraintLeft_toLeftOf="parent"
         ads:layout_constraintBottom_toBottomOf="parent"
+        ads:layout_constraintLeft_toLeftOf="parent"
+        ads:layout_constraintRight_toRightOf="parent"
         ads:layout_constraintTop_toBottomOf="@+id/button"
-        ads:layout_constraintVertical_bias="0.779">
-    </com.google.android.gms.ads.AdView>
+        ads:layout_constraintVertical_bias="0.428"></com.google.android.gms.ads.AdView>
 
     <CheckBox
         android:id="@+id/checkBox"

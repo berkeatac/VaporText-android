@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bgshape"
     tools:context="berkea.vaportext.DisplayMessageActivity"
-    tools:layout_editor_absoluteY="81dp"
-    tools:layout_editor_absoluteX="0dp">
+    tools:layout_editor_absoluteX="0dp"
+    tools:layout_editor_absoluteY="81dp">
 
     <TextView
         android:id="@+id/textNo"
@@ -28,13 +29,14 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.046"
-        />
+        app:layout_constraintVertical_bias="0.046" />
 
     <Button
         android:id="@+id/copyButton"
         android:layout_width="155dp"
         android:layout_height="60dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
         android:background="@drawable/shape_empty"
         android:text="@string/copyText"
         android:textColor="@android:color/background_light"
@@ -44,9 +46,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textNo"
-        app:layout_constraintVertical_bias="0.27"
-        android:layout_marginRight="0dp"
-        android:layout_marginLeft="0dp" />
+        app:layout_constraintVertical_bias="0.27" />
 
     <Button
         android:id="@+id/backButton"
@@ -57,16 +57,17 @@
         android:textColor="@android:color/background_light"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textNo"
-        app:layout_constraintVertical_bias="0.789"
-        app:layout_constraintHorizontal_bias="0.502" />
+        app:layout_constraintVertical_bias="0.533" />
 
     <Button
         android:id="@+id/shareButton"
         android:layout_width="155dp"
         android:layout_height="60dp"
+        android:layout_marginLeft="0dp"
         android:background="@drawable/shape_empty"
         android:text="@string/shareText"
         android:textColor="@android:color/background_light"
@@ -76,7 +77,19 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textNo"
-        app:layout_constraintVertical_bias="0.27"
-        android:layout_marginLeft="0dp" />
+        app:layout_constraintVertical_bias="0.27" />
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/backButton"
+        ads:adSize="LARGE_BANNER"
+        ads:adUnitId="ca-app-pub-7995520615225219/9832553417">
+    </com.google.android.gms.ads.AdView>
 
 </android.support.constraint.ConstraintLayout>
