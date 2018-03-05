@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -24,7 +25,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getSupportActionBar().setElevation(0);
-        MobileAds.initialize(getApplicationContext(),"ca-app-pub-7995520615225219~4866392143");
+        MobileAds.initialize(this,"ca-app-pub-7995520615225219~4866392143");
 
         mCheckBox = (CheckBox) findViewById(R.id.checkBox);
         mVapeButton = (Button) findViewById(R.id.button);
@@ -68,6 +69,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if(!mEditText.getText().toString().equals("")) {
                     Intent intent = displayIntent();
                     startActivity(intent);
+                } else {
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            "Blank Text", Toast.LENGTH_SHORT);
+                    toast.show();
                 }
                 break;
         }

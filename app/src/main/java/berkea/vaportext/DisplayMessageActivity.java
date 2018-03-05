@@ -60,8 +60,8 @@ public class DisplayMessageActivity extends AppCompatActivity implements View.On
             if(clipboard != null) {
                 clipboard.setPrimaryClip(clip);
             }
-
         }
+
         Toast toast = Toast.makeText(getApplicationContext(),
                 "Text is copied", Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.BOTTOM, 50, 50);
