@@ -12,12 +12,12 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    Button button;
+    private Button mVapeButton;
     private AdView mAdView;
-    CheckBox checkBox;
-    EditText editText;
+    private CheckBox mCheckBox;
+    private EditText mEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,53 +26,51 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setElevation(0);
         MobileAds.initialize(getApplicationContext(),"ca-app-pub-7995520615225219~4866392143");
 
+        mCheckBox = (CheckBox) findViewById(R.id.checkBox);
+        mVapeButton = (Button) findViewById(R.id.button);
+        mEditText = (EditText) findViewById(R.id.text);
 
-        checkBox = (CheckBox) findViewById(R.id.checkBox);
-        button = (Button) findViewById(R.id.button);
-        editText = (EditText) findViewById(R.id.text);
-
-
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(editText.getText().toString() != ""){
-
-                    Intent intent = displayIntent();
-                    startActivity(intent);
-
-                }
-            }
-        });
+        mVapeButton.setOnClickListener(this);
 
         mAdView = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
-
     }
 
-    public String toVaporText(String message, Boolean caps){
+    public String toVaporText(String message, Boolean isUpperCase) {
         int len = message.length();
-        if(caps){
+        if(isUpperCase) {
             message = message.toUpperCase();
         }
 
-        String result = "";
-        for(int i=0; i < len; i++){
+        StringBuilder result = new StringBuilder();
+        for(int i = 0; i < len; i++) {
             char ch = message.charAt(i);
-            result = result + ch + " ";
+            result.append(ch).append(" ");
         }
-        return result;
-
+        return result.toString();
     }
 
-    public Intent displayIntent(){
+    public Intent displayIntent() {
         Intent intent = new Intent(getApplicationContext(), DisplayMessageActivity.class);
-        String message = editText.getText().toString();
-        Boolean caps = checkBox.isChecked();
+        String message = mEditText.getText().toString();
+        Boolean caps = mCheckBox.isChecked();
         String result = toVaporText(message, caps);
 
         intent.putExtra("result", result);
         return intent;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.button:
+                if(!mEditText.getText().toString().equals("")) {
+                    Intent intent = displayIntent();
+                    startActivity(intent);
+                }
+                break;
+        }
     }
 
     @Override
@@ -84,7 +82,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if(mAdView!=null){  // Check if Adview is not null in case of fist time load.
-            mAdView.resume();}
+        if(mAdView != null) {  // Check if Adview is not null in case of fist time load.
+            mAdView.resume();
+        } else {
+            mAdView = (AdView) findViewById(R.id.adView);
+            AdRequest adRequest = new AdRequest.Builder().build();
+            mAdView.loadAd(adRequest);
+        }
     }
 }
