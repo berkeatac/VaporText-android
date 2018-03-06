@@ -15,6 +15,7 @@ import com.google.android.gms.ads.MobileAds;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
+    private final static String AD_KEY = "ca-app-pub-7995520615225219~4866392143";
     private Button mVapeButton;
     private AdView mAdView;
     private CheckBox mCheckBox;
@@ -24,8 +25,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getSupportActionBar().setElevation(0);
-        MobileAds.initialize(this,"ca-app-pub-7995520615225219~4866392143");
+
+        if(getSupportActionBar() != null) {
+            getSupportActionBar().setElevation(0);
+        }
+        MobileAds.initialize(this, AD_KEY);
 
         mCheckBox = (CheckBox) findViewById(R.id.checkBox);
         mVapeButton = (Button) findViewById(R.id.button);
