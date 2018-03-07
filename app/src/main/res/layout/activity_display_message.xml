@@ -31,13 +31,13 @@
 
             <Button
                 style="@style/DisplayScreenButton"
-                android:id="@+id/backButton"
-                android:text="@string/backText"/>
+                android:id="@+id/shareButton"
+                android:text="@string/shareText"/>
 
             <Button
                 style="@style/DisplayScreenButton"
-                android:id="@+id/shareButton"
-                android:text="@string/shareText"/>
+                android:id="@+id/backButton"
+                android:text="@string/backText"/>
 
             <com.google.android.gms.ads.AdView
                 android:id="@+id/adView2"
