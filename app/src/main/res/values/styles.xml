@@ -34,6 +34,7 @@
         <item name="android:textAlignment">center</item>
         <item name="android:scrollbars">vertical</item>
         <item name="android:maxLines">150</item>
+        <item name="android:textColor">@color/colorAccent</item>
     </style>
 
 </resources>
