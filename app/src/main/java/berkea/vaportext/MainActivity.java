@@ -32,7 +32,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @BindView(R.id.text) EditText mEditText;
 
     private String message;
-
     private FirebaseAnalytics mFirebaseAnalytics;
 
 
@@ -40,31 +39,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         ButterKnife.bind(this);
 
         if(getSupportActionBar() != null) {
             getSupportActionBar().setElevation(0);
         }
+
+        mVapeButton.setOnClickListener(this);
+
         MobileAds.initialize(this, AD_KEY);
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
-        // Log User with its unique device id on start up
         logUser();
-
-        mVapeButton.setOnClickListener(this);
 
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
     }
 
     private void logUser() {
-        // TODO: Use the current user's information
-        // You can call any combination of these three methods
         String android_id = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
         Crashlytics.setUserIdentifier(android_id);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -101,11 +96,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.button:
-
-                // CRASHLYTICS
-                // Get button click tracked
-                trackAction();
-
                 if(!mEditText.getText().toString().equals("")) {
                     Intent intent = displayIntent();
                     startActivity(intent);
@@ -115,11 +105,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     toast.show();
                 }
 
+                // CRASHLYTICS
+                trackAction();
                 //FIREBASE
                 Bundle bundle = new Bundle();
                 bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Opened App");
                 mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.APP_OPEN, bundle);
-
                 break;
         }
     }
@@ -131,17 +122,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void trackAction() {
-        // TODO: Use your own attributes to track content views in your app
         Answers.getInstance().logContentView(new ContentViewEvent()
                 .putContentName("Pressed Button")
                 .putContentType("Action"));
-
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if(mAdView != null) {  // Check if Adview is not null in case of fist time load.
+        if(mAdView != null) {
             mAdView.resume();
         } else {
             mAdView = (AdView) findViewById(R.id.adView);

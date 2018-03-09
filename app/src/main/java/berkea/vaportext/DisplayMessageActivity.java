@@ -24,15 +24,19 @@ public class DisplayMessageActivity extends AppCompatActivity implements View.On
     @BindView(R.id.backButton) Button mBackButton;
     @BindView(R.id.textNo) TextView mTextView;
 
-    private String result;
+    private String mResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_message);
-        getSupportActionBar().setElevation(0);
-        final String result = getIntent().getStringExtra("result");
         ButterKnife.bind(this);
+
+        if(getSupportActionBar() != null) {
+            getSupportActionBar().setElevation(0);
+        }
+
+        final String result = getIntent().getStringExtra("result");
 
         mTextView.setText(result);
         mTextView.setMovementMethod(new ScrollingMovementMethod());
@@ -44,6 +48,33 @@ public class DisplayMessageActivity extends AppCompatActivity implements View.On
         AdView mAdView = (AdView) findViewById(R.id.adView2);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
+    }
+
+    public void shareText(String text) {
+        Intent share = new Intent(Intent.ACTION_SEND);
+        share.setType("text/plain");
+        share.putExtra(Intent.EXTRA_TEXT, text);
+        startActivity(Intent.createChooser(share, "Share using"));
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.copyButton:
+                mResult = getIntent().getStringExtra("result");
+                copyToClipboard(mResult);
+                break;
+
+            case R.id.shareButton:
+                shareText(mResult);
+                break;
+
+            case R.id.backButton:
+                Intent mainIntent = new Intent(getApplicationContext(), MainActivity.class);
+                mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(mainIntent);
+                break;
+        }
     }
 
     public void copyToClipboard(String copyText) {
@@ -68,32 +99,5 @@ public class DisplayMessageActivity extends AppCompatActivity implements View.On
                 "Text is copied", Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.BOTTOM, 50, 50);
         toast.show();
-    }
-
-    public void shareText(String text) {
-        Intent share = new Intent(Intent.ACTION_SEND);
-        share.setType("text/plain");
-        share.putExtra(Intent.EXTRA_TEXT, text);
-        startActivity(Intent.createChooser(share, "Share using"));
-    }
-
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.copyButton:
-                result = getIntent().getStringExtra("result");
-                copyToClipboard(result);
-                break;
-
-            case R.id.shareButton:
-                shareText(result);
-                break;
-
-            case R.id.backButton:
-                Intent a = new Intent(getApplicationContext(), MainActivity.class);
-                a.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(a);
-                break;
-        }
     }
 }
