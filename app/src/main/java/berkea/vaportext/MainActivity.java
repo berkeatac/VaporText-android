@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.answers.ContentViewEvent;
+import com.crashlytics.android.answers.CustomEvent;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
@@ -51,6 +52,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         logUser();
+
+        Answers.getInstance().logCustom(new CustomEvent("Opened App"));
 
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
@@ -106,7 +109,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
 
                 // CRASHLYTICS
-                trackAction();
+                Answers.getInstance().logCustom(new CustomEvent("Pressed Vaporize Button"));
                 //FIREBASE
                 Bundle bundle = new Bundle();
                 bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Opened App");
@@ -119,12 +122,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onPause() {
         mAdView.pause();
         super.onPause();
-    }
-
-    private void trackAction() {
-        Answers.getInstance().logContentView(new ContentViewEvent()
-                .putContentName("Pressed Button")
-                .putContentType("Action"));
     }
 
     @Override

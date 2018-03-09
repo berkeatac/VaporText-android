@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.CustomEvent;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
@@ -63,15 +65,18 @@ public class DisplayMessageActivity extends AppCompatActivity implements View.On
             case R.id.copyButton:
                 mResult = getIntent().getStringExtra("result");
                 copyToClipboard(mResult);
+                Answers.getInstance().logCustom(new CustomEvent("Copied Text"));
                 break;
 
             case R.id.shareButton:
                 shareText(mResult);
+                Answers.getInstance().logCustom(new CustomEvent("Shared Text"));
                 break;
 
             case R.id.backButton:
                 Intent mainIntent = new Intent(getApplicationContext(), MainActivity.class);
                 mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                Answers.getInstance().logCustom(new CustomEvent("Used Back Button"));
                 startActivity(mainIntent);
                 break;
         }
