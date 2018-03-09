@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "793357131155",
+    "firebase_url": "https://vaportext-14b67.firebaseio.com",
+    "project_id": "vaportext-14b67",
+    "storage_bucket": "vaportext-14b67.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:793357131155:android:d9858486cc9432e9",
+        "android_client_info": {
+          "package_name": "berkea.vaportext"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "793357131155-oi4mhcri0q6u8dbjlopp034d8vem43g5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "berkea.vaportext",
+            "certificate_hash": "d7c1a457e82bd67edfed5bdee1284946d53580ab"
+          }
+        },
+        {
+          "client_id": "793357131155-devvp46a6a64dspqdkvgb6lvha5slftm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBGV2BE0llka0iRVCn8zQU6houcORO__ac"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "793357131155-devvp46a6a64dspqdkvgb6lvha5slftm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

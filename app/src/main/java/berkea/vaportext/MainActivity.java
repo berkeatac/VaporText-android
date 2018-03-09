@@ -2,6 +2,7 @@ package berkea.vaportext;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -11,9 +12,13 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.ContentViewEvent;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -22,6 +27,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private AdView mAdView;
     private CheckBox mCheckBox;
     private EditText mEditText;
+
+    private String message;
+
+    private FirebaseAnalytics mFirebaseAnalytics;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +42,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             getSupportActionBar().setElevation(0);
         }
         MobileAds.initialize(this, AD_KEY);
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+
+        // Log User with its unique device id on start up
+        logUser();
 
         mCheckBox = (CheckBox) findViewById(R.id.checkBox);
         mVapeButton = (Button) findViewById(R.id.button);
@@ -43,6 +57,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
     }
+
+    private void logUser() {
+        // TODO: Use the current user's information
+        // You can call any combination of these three methods
+        String android_id = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
+        Crashlytics.setUserIdentifier(android_id);
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -67,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public Intent displayIntent() {
         Intent intent = new Intent(getApplicationContext(), DisplayMessageActivity.class);
-        String message = mEditText.getText().toString();
+        message = mEditText.getText().toString();
         Boolean caps = mCheckBox.isChecked();
         String result = toVaporText(message, caps);
 
@@ -79,6 +101,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.button:
+
+                // Get button click tracked
+                trackAction();
+
                 if(!mEditText.getText().toString().equals("")) {
                     Intent intent = displayIntent();
                     startActivity(intent);
@@ -87,6 +113,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             "Blank Text", Toast.LENGTH_SHORT);
                     toast.show();
                 }
+
+                Bundle bundle = new Bundle();
+                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Opened App");
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.APP_OPEN, bundle);
+
                 break;
         }
     }
@@ -95,6 +126,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onPause() {
         mAdView.pause();
         super.onPause();
+    }
+
+    private void trackAction() {
+        // TODO: Use your own attributes to track content views in your app
+        Answers.getInstance().logContentView(new ContentViewEvent()
+                .putContentName("Pressed Button")
+                .putContentType("Action"));
+
     }
 
     @Override

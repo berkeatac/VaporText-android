@@ -24,7 +24,6 @@ public class DisplayMessageActivity extends AppCompatActivity implements View.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_message);
         getSupportActionBar().setElevation(0);
-
         final String result = getIntent().getStringExtra("result");
 
         TextView mTextView = (TextView) findViewById(R.id.textNo);
