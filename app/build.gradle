@@ -20,8 +20,8 @@ android {
         applicationId "berkea.vaportext"
         minSdkVersion 19
         targetSdkVersion 25
-        versionCode 1006
-        versionName "1.6"
+        versionCode 1007
+        versionName "1.7"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
