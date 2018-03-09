@@ -20,13 +20,16 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private final static String AD_KEY = "ca-app-pub-7995520615225219~4866392143";
-    private Button mVapeButton;
-    private AdView mAdView;
-    private CheckBox mCheckBox;
-    private EditText mEditText;
+    @BindView(R.id.button) Button mVapeButton;
+    @BindView(R.id.adView) AdView mAdView;
+    @BindView(R.id.checkBox) CheckBox mCheckBox;
+    @BindView(R.id.text) EditText mEditText;
 
     private String message;
 
@@ -38,6 +41,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        ButterKnife.bind(this);
+
         if(getSupportActionBar() != null) {
             getSupportActionBar().setElevation(0);
         }
@@ -47,13 +52,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // Log User with its unique device id on start up
         logUser();
 
-        mCheckBox = (CheckBox) findViewById(R.id.checkBox);
-        mVapeButton = (Button) findViewById(R.id.button);
-        mEditText = (EditText) findViewById(R.id.text);
-
         mVapeButton.setOnClickListener(this);
 
-        mAdView = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
     }
@@ -102,6 +102,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()) {
             case R.id.button:
 
+                // CRASHLYTICS
                 // Get button click tracked
                 trackAction();
 
@@ -114,6 +115,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     toast.show();
                 }
 
+                //FIREBASE
                 Bundle bundle = new Bundle();
                 bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Opened App");
                 mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.APP_OPEN, bundle);

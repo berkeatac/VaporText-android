@@ -14,8 +14,15 @@ import android.widget.Toast;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 
 public class DisplayMessageActivity extends AppCompatActivity implements View.OnClickListener {
+    @BindView(R.id.copyButton) Button mCopyButton;
+    @BindView(R.id.shareButton) Button mShareButton;
+    @BindView(R.id.backButton) Button mBackButton;
+    @BindView(R.id.textNo) TextView mTextView;
 
     private String result;
 
@@ -25,14 +32,10 @@ public class DisplayMessageActivity extends AppCompatActivity implements View.On
         setContentView(R.layout.activity_display_message);
         getSupportActionBar().setElevation(0);
         final String result = getIntent().getStringExtra("result");
+        ButterKnife.bind(this);
 
-        TextView mTextView = (TextView) findViewById(R.id.textNo);
         mTextView.setText(result);
         mTextView.setMovementMethod(new ScrollingMovementMethod());
-
-        Button mCopyButton = (Button) findViewById(R.id.copyButton);
-        Button mShareButton = (Button) findViewById(R.id.shareButton);
-        Button mBackButton = (Button) findViewById(R.id.backButton);
 
         mCopyButton.setOnClickListener(this);
         mShareButton.setOnClickListener(this);
