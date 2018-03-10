@@ -21,12 +21,13 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
+import java.util.Date;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private final static String AD_KEY = "ca-app-pub-7995520615225219~4866392143";
     @BindView(R.id.button) Button mVapeButton;
     @BindView(R.id.adView) AdView mAdView;
     @BindView(R.id.checkBox) CheckBox mCheckBox;
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private String message;
     private FirebaseAnalytics mFirebaseAnalytics;
-
+    public static Model model;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,13 +49,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         mVapeButton.setOnClickListener(this);
 
-        MobileAds.initialize(this, AD_KEY);
+        init();
+    }
+
+    private void init() {
+        model = new Model(getApplicationContext(),new Date());
+
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
-
         logUser();
-
         Answers.getInstance().logCustom(new CustomEvent("Opened App"));
-
+        MobileAds.initialize(this, Constants.AD_KEY);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
     }
@@ -62,13 +66,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void logUser() {
         String android_id = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
         Crashlytics.setUserIdentifier(android_id);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.vapor_menu, menu);
-        return true;
     }
 
     public Intent displayIntent(String result) {
@@ -81,6 +78,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         message = mEditText.getText().toString();
         Boolean caps = mCheckBox.isChecked();
         return TextUtils.toVaporText(message, caps);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.vapor_menu, menu);
+        return true;
     }
 
     @Override

@@ -1,15 +1,12 @@
 package berkea.vaportext;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.method.ScrollingMovementMethod;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.answers.CustomEvent;
@@ -39,14 +36,15 @@ public class DisplayMessageActivity extends AppCompatActivity implements View.On
         }
 
         final String result = getIntent().getStringExtra("result");
-
         mTextView.setText(result);
         mTextView.setMovementMethod(new ScrollingMovementMethod());
 
         mCopyButton.setOnClickListener(this);
         mShareButton.setOnClickListener(this);
         mBackButton.setOnClickListener(this);
+    }
 
+    private void init() {
         AdView mAdView = (AdView) findViewById(R.id.adView2);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
@@ -64,7 +62,7 @@ public class DisplayMessageActivity extends AppCompatActivity implements View.On
         switch (view.getId()) {
             case R.id.copyButton:
                 mResult = getIntent().getStringExtra("result");
-                copyToClipboard(mResult);
+                TextUtils.copyToClipboard(mResult);
                 Answers.getInstance().logCustom(new CustomEvent("Copied Text"));
                 break;
 
@@ -80,29 +78,5 @@ public class DisplayMessageActivity extends AppCompatActivity implements View.On
                 startActivity(mainIntent);
                 break;
         }
-    }
-
-    public void copyToClipboard(String copyText) {
-        int sdk = android.os.Build.VERSION.SDK_INT;
-        if (sdk < android.os.Build.VERSION_CODES.HONEYCOMB) {
-            android.text.ClipboardManager clipboard = (android.text.ClipboardManager)
-                    getSystemService(Context.CLIPBOARD_SERVICE);
-            if(clipboard != null) {
-                clipboard.setText(copyText);
-            }
-        } else {
-            android.content.ClipboardManager clipboard = (android.content.ClipboardManager)
-                    getSystemService(Context.CLIPBOARD_SERVICE);
-            android.content.ClipData clip = android.content.ClipData
-                    .newPlainText("Your text", copyText);
-            if(clipboard != null) {
-                clipboard.setPrimaryClip(clip);
-            }
-        }
-
-        Toast toast = Toast.makeText(getApplicationContext(),
-                "Text is copied", Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.BOTTOM, 50, 50);
-        toast.show();
     }
 }
