@@ -1,4 +1,4 @@
-package berkea.vaportext;
+package berkea.vaportext.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,7 +14,6 @@ import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.answers.Answers;
-import com.crashlytics.android.answers.ContentViewEvent;
 import com.crashlytics.android.answers.CustomEvent;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -23,6 +22,10 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.Date;
 
+import berkea.vaportext.Constants;
+import berkea.vaportext.Model;
+import berkea.vaportext.R;
+import berkea.vaportext.TextUtils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 

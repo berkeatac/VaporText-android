@@ -1,4 +1,4 @@
-package berkea.vaportext;
+package berkea.vaportext.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;

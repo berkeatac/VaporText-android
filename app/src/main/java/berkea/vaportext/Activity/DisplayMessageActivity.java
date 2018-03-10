@@ -1,4 +1,4 @@
-package berkea.vaportext;
+package berkea.vaportext.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +13,8 @@ import com.crashlytics.android.answers.CustomEvent;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
+import berkea.vaportext.R;
+import berkea.vaportext.TextUtils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 

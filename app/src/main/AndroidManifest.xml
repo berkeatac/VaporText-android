@@ -14,13 +14,13 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".MainActivity"
+            android:name=".Activity.MainActivity"
             android:windowSoftInputMode="adjustPan" />
 
-        <activity android:name=".DisplayMessageActivity" />
+        <activity android:name=".Activity.DisplayMessageActivity" />
 
         <activity
-            android:name=".SplashActivity"
+            android:name=".Activity.SplashActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
