@@ -71,28 +71,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return true;
     }
 
-    public String toVaporText(String message, Boolean isUpperCase) {
-        int len = message.length();
-        if(isUpperCase) {
-            message = message.toUpperCase();
-        }
-
-        StringBuilder result = new StringBuilder();
-        for(int i = 0; i < len; i++) {
-            char ch = message.charAt(i);
-            result.append(ch).append(" ");
-        }
-        return result.toString();
-    }
-
-    public Intent displayIntent() {
+    public Intent displayIntent(String result) {
         Intent intent = new Intent(getApplicationContext(), DisplayMessageActivity.class);
-        message = mEditText.getText().toString();
-        Boolean caps = mCheckBox.isChecked();
-        String result = toVaporText(message, caps);
-
         intent.putExtra("result", result);
         return intent;
+    }
+
+    public String getResultStr() {
+        message = mEditText.getText().toString();
+        Boolean caps = mCheckBox.isChecked();
+        return TextUtils.toVaporText(message, caps);
     }
 
     @Override
@@ -100,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()) {
             case R.id.button:
                 if(!mEditText.getText().toString().equals("")) {
-                    Intent intent = displayIntent();
+                    Intent intent = displayIntent(getResultStr());
                     startActivity(intent);
                 } else {
                     Toast toast = Toast.makeText(getApplicationContext(),
