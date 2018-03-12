@@ -26,6 +26,7 @@ public class DisplayMessageActivity extends AppCompatActivity implements View.On
     @BindView(R.id.textNo) TextView mTextView;
 
     private String mResult;
+    private String result = "vaporwave";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +38,7 @@ public class DisplayMessageActivity extends AppCompatActivity implements View.On
             getSupportActionBar().setElevation(0);
         }
 
-        final String result = getIntent().getStringExtra("result");
+        result = getIntent().getStringExtra("result");
         mTextView.setText(result);
         mTextView.setMovementMethod(new ScrollingMovementMethod());
 
