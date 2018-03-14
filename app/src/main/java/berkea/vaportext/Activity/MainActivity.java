@@ -2,6 +2,7 @@ package berkea.vaportext.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -129,5 +130,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             AdRequest adRequest = new AdRequest.Builder().build();
             mAdView.loadAd(adRequest);
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+        outState.putString("text", mEditText.getText().toString());
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        mEditText.setText(savedInstanceState.getString("text"));
     }
 }
