@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<LinearLayout android:layout_height="match_parent"
-    android:layout_width="match_parent"
-    android:background="@drawable/bgshape"
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:ads="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="textData"
+            type="berkea.vaportext.VaporText"/>
+    </data>
+
+    <LinearLayout android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:background="@drawable/bgshape"
+    >
 
     <ScrollView
         android:layout_width="match_parent"
@@ -50,3 +58,4 @@
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
+</layout>
