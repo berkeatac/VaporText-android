@@ -1,85 +1,84 @@
 package berkea.vaportext.Activity;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.method.ScrollingMovementMethod;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
+import android.view.MenuItem;
 
 import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.answers.CustomEvent;
 import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-
+import java.util.Date;
+import berkea.vaportext.Model;
 import berkea.vaportext.R;
 import berkea.vaportext.TextUtils;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+import berkea.vaportext.ViewModel.DisplayMessageViewModel;
+import berkea.vaportext.databinding.ActivityDisplayMessageBinding;
 
+public class DisplayMessageActivity extends BaseActivity{
 
-public class DisplayMessageActivity extends AppCompatActivity implements View.OnClickListener {
-    @BindView(R.id.copyButton) Button mCopyButton;
-    @BindView(R.id.shareButton) Button mShareButton;
-    @BindView(R.id.backButton) Button mBackButton;
-    @BindView(R.id.textNo) TextView mTextView;
+    private static final String BUNDLE_RESULT = "RESULT";
 
-    private String mResult;
-    private String result = "vaporwave";
+    @Nullable
+    private String result;
+
+    private ActivityDisplayMessageBinding binding;
+    private DisplayMessageViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_message);
-        ButterKnife.bind(this);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_display_message);
+        viewModel = ViewModelProviders.of(this).get(DisplayMessageViewModel.class);
 
-        if(getSupportActionBar() != null) {
-            getSupportActionBar().setElevation(0);
+        init();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
         }
-
-        result = getIntent().getStringExtra("result");
-        mTextView.setText(result);
-        mTextView.setMovementMethod(new ScrollingMovementMethod());
-
-        mCopyButton.setOnClickListener(this);
-        mShareButton.setOnClickListener(this);
-        mBackButton.setOnClickListener(this);
+        return super.onOptionsItemSelected(item);
     }
 
     private void init() {
-        AdView mAdView = (AdView) findViewById(R.id.adView2);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
+        binding.adview.loadAd(new AdRequest.Builder().build());
+        handleActionBar(true);
+        setResultText();
+        setListeners();
+    }
+
+    private void setResultText() {
+        result = getIntent().getStringExtra(BUNDLE_RESULT);
+        binding.textviewVapor.setText(result);
+        binding.textviewVapor.setMovementMethod(new ScrollingMovementMethod());
+    }
+
+    private void setListeners() {
+        binding.buttonCopy.setOnClickListener(v -> {
+            Model model = new Model(getApplicationContext(),new Date());
+            TextUtils.copyToClipboard(result, model.getContext());
+            Answers.getInstance().logCustom(new CustomEvent("Copied to Clipboard"));
+        });
+
+        binding.buttonShare.setOnClickListener(v -> {
+            shareText(result);
+            Answers.getInstance().logCustom(new CustomEvent("Shared Text"));
+        });
     }
 
     public void shareText(String text) {
         Intent share = new Intent(Intent.ACTION_SEND);
         share.setType("text/plain");
         share.putExtra(Intent.EXTRA_TEXT, text);
-        startActivity(Intent.createChooser(share, "Share using"));
-    }
-
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.copyButton:
-                mResult = getIntent().getStringExtra("result");
-                TextUtils.copyToClipboard(mResult);
-                Answers.getInstance().logCustom(new CustomEvent("Copied Text"));
-                break;
-
-            case R.id.shareButton:
-                shareText(mResult);
-                Answers.getInstance().logCustom(new CustomEvent("Shared Text"));
-                break;
-
-            case R.id.backButton:
-                Intent mainIntent = new Intent(getApplicationContext(), MainActivity.class);
-                mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                Answers.getInstance().logCustom(new CustomEvent("Used Back Button"));
-                startActivity(mainIntent);
-                break;
-        }
+        startActivity(Intent.createChooser(share, getString(R.string.share_using)));
     }
 }

@@ -5,4 +5,6 @@
     <string name="copyText">C O P Y \u0020 T E X T</string>
     <string name="shareText">S H A R E</string>
     <string name="backText">\u003c \u0020 B A C K</string>
+    <string name="share_using">Share using</string>
+    <string name="title_activity_base">BaseActivity</string>
 </resources>

@@ -12,50 +12,42 @@
 
     <LinearLayout android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:background="@drawable/bgshape"
-    >
+    android:background="@drawable/bgshape">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
-
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
-            <TextView
-                style="@style/DisplayScreenText"
-                android:id="@+id/textNo"
-                tools:text="@string/app_name"
-                />
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
 
-            <Button
-                style="@style/DisplayScreenButton"
-                android:id="@+id/copyButton"
-                android:text="@string/copyText"/>
+                <TextView
+                    android:id="@+id/textview_vapor"
+                    style="@style/DisplayScreenText"
+                    tools:text="@string/app_name" />
 
-            <Button
-                style="@style/DisplayScreenButton"
-                android:id="@+id/shareButton"
-                android:text="@string/shareText"/>
+                <Button
+                    android:id="@+id/button_copy"
+                    style="@style/DisplayScreenButton"
+                    android:text="@string/copyText"/>
 
-            <Button
-                style="@style/DisplayScreenButton"
-                android:id="@+id/backButton"
-                android:text="@string/backText"/>
+                <Button
+                    android:id="@+id/button_share"
+                    style="@style/DisplayScreenButton"
+                    android:text="@string/shareText"/>
 
-            <com.google.android.gms.ads.AdView
-                android:id="@+id/adView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                ads:adSize="LARGE_BANNER"
-                ads:adUnitId="ca-app-pub-7995520615225219/9832553417">
-            </com.google.android.gms.ads.AdView>
+                <com.google.android.gms.ads.AdView
+                    android:id="@+id/adview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    ads:adSize="LARGE_BANNER"
+                    ads:adUnitId="ca-app-pub-7995520615225219/9832553417">
+                </com.google.android.gms.ads.AdView>
 
-        </LinearLayout>
-    </ScrollView>
-</LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
 </layout>
