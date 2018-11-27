@@ -2,6 +2,7 @@ package berkea.vaportext
 
 import android.content.Context
 import android.view.Gravity
+import android.widget.TextView
 import android.widget.Toast
 
 class TextUtils internal constructor() {
@@ -26,17 +27,51 @@ class TextUtils internal constructor() {
         }
 
         fun copyToClipboard(copyText: String, context: Context) {
-            val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as android.content.ClipboardManager
-            val clip = android.content.ClipData
-                    .newPlainText("VaporText", copyText)
-            if (clipboard != null) {
-                clipboard.primaryClip = clip
+            val currentSdk = android.os.Build.VERSION.SDK_INT
+
+            if (currentSdk < android.os.Build.VERSION_CODES.HONEYCOMB) {
+                val manager: android.text.ClipboardManager = context.getSystemService(Context.CLIPBOARD_SERVICE)
+                        as android.text.ClipboardManager
+                try {
+                    manager.text = copyText
+                } catch (e: Exception) {
+                    // ignored
+                }
+            } else {
+                val manager: android.content.ClipboardManager = context.getSystemService(Context.CLIPBOARD_SERVICE)
+                        as android.content.ClipboardManager
+                manager.primaryClip = android.content.ClipData.newPlainText("label", copyText)
             }
 
             val toast = Toast.makeText(context,
                     "Copied Text!", Toast.LENGTH_SHORT)
             toast.setGravity(Gravity.BOTTOM, 0, 0)
             toast.show()
+        }
+
+        /**
+         * Copies TextView text to clipboard with given label
+         */
+        fun TextView.copyToClipboard(label : String) {
+
+            val currentSdk = android.os.Build.VERSION.SDK_INT
+
+            if (currentSdk < android.os.Build.VERSION_CODES.HONEYCOMB) {
+                val manager: android.text.ClipboardManager = context.getSystemService(Context.CLIPBOARD_SERVICE)
+                        as android.text.ClipboardManager
+                try {
+                    manager.text = text
+                } catch (e: Exception) {
+                    // ignored
+                }
+            } else {
+                val manager: android.content.ClipboardManager = context.getSystemService(Context.CLIPBOARD_SERVICE)
+                        as android.content.ClipboardManager
+                manager.primaryClip?.let {
+                    android.content.ClipData
+                            .newPlainText(label, text)
+                }
+            }
         }
     }
 }
